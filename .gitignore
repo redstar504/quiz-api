@@ -1,0 +1,8 @@
+db.sqlite3
+*.iml
+__pycache__
+.idea/
+log/*.log
+*.pem
+certs/
+.env
