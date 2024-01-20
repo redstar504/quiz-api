@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/quizzes',
+        default='postgresql://quizzes:quizzes@localhost:5432/quizzes',
         conn_max_age=600
     )
 }
