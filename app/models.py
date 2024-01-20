@@ -10,9 +10,10 @@ class Topic(models.Model):
 
 class Question(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    question = models.CharField(max_length=60)
+    question = models.CharField(max_length=255)
 
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    option = models.CharField(max_length=60)
+    is_correct = models.BooleanField(default=False)
+    option = models.CharField(max_length=255)
