@@ -8,7 +8,7 @@ from app.serializers import TopicListSerializer, TopicDetailSerializer
 # Create your views here.
 
 class TopicList(generics.ListAPIView):
-    queryset = Topic.objects.all()
+    queryset = Topic.objects.all().order_by('title')
     serializer_class = TopicListSerializer
 
 
