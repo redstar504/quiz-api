@@ -16,8 +16,22 @@ from pathlib import Path
 import dj_database_url
 from celery import Celery
 
+import environ
+
+env = environ.Env(
+    OPENAI_API_KEY=(str, ''),
+    CELERY_BROKER_URL=(str, '')
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(BASE_DIR / '.env')
+
+OPENAI_API_KEY = env('OPENAI_API_KEY')
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+
+# Comment out if not using results
+CELERY_RESULT_BACKEND = env('CELERY_BROKER_URL')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -135,10 +149,3 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-if 'RENDER' in os.environ:
-    CELERY_BROKER_URL = "redis://red-cmmp2mf109ks739alj5g:6379"
-    CELERY_RESULT_BACKEND = "redis://red-cmmp2mf109ks739alj5g:6379"
-else:
-    CELERY_BROKER_URL = 'redis://localhost'
-    CELERY_RESULT_BACKEND = 'redis://localhost'
