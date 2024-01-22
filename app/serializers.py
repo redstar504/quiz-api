@@ -17,7 +17,12 @@ class QuestionSerializer(serializers.ModelSerializer):
         return [option.option for option in obj.questionoption_set.all()]
 
     def get_answer(self, obj):
-        return obj.questionoption_set.get(is_correct=True).option
+        try:
+            correct_option = obj.questionoption_set.get(is_correct=True).option
+        except QuestionOption.DoesNotExist:
+            correct_option = obj.questionoption_set.all()[0].option
+
+        return correct_option
 
     class Meta:
         model = Question

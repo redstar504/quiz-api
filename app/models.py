@@ -6,6 +6,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=30)
     icon = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
+    statkey = models.CharField(max_length=60, blank=True, null=True)
 
 
 class Question(models.Model):
