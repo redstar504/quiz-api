@@ -2,6 +2,8 @@
 
 set -o errexit
 
-#gunicorn quiz.wsgi:application &
+gunicorn quiz.wsgi:application &
 
-nohup python manage.py celery --production &
+exit 0
+
+#nohup python manage.py celery --production &
