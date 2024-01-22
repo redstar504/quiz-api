@@ -136,5 +136,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = "redis://red-cmmp2mf109ks739alj5g:6379"
-CELERY_RESULT_BACKEND = "redis://red-cmmp2mf109ks739alj5g:6379"
+if 'RENDER' in os.environ:
+    CELERY_BROKER_URL = "redis://red-cmmp2mf109ks739alj5g:6379"
+    CELERY_RESULT_BACKEND = "redis://red-cmmp2mf109ks739alj5g:6379"
+else:
+    CELERY_BROKER_URL = 'redis://localhost'
+    CELERY_RESULT_BACKEND = 'redis://localhost'
