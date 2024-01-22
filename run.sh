@@ -2,9 +2,6 @@
 
 set -o errexit
 
-gunicorn quiz.wsgi:application &
-echo "waiting 10 seconds before starting celery..."
+#gunicorn quiz.wsgi:application &
 
-sleep 10
-
-python manage.py celery --production &
+nohup python manage.py celery --production &
