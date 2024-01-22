@@ -7,4 +7,4 @@ poetry install
 python manage.py collectstatic --no-input
 python manage.py migrate
 
-#DJANGO_SETTINGS_MODULE=quiz.settings celery -A quiz.settings worker --loglevel=info &
+celery -A quiz worker --concurrency=4 --loglevel=debug --logfile=celery.log --detach
