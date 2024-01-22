@@ -5,8 +5,4 @@ from app.models import Topic
 
 @shared_task
 def generate_topic(description):
-    print(settings.CELERY_BROKER_URL)
-    # topic = Topic(title="hooha", icon="fuzzy", color="black")
-    # topic.save()
-    #
-    # return topic.id
+    return settings.CELERY_BROKER_URL
