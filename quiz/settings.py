@@ -135,18 +135,3 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-RENDER_REDIS_BACKEND_URL = os.environ.get('CELERY_BROKER_URL')
-
-if RENDER_REDIS_BACKEND_URL:
-    CELERY_BROKER_URL = RENDER_REDIS_BACKEND_URL
-    CELERY_RESULT_BACKEND = RENDER_REDIS_BACKEND_URL
-else:
-    CELERY_BROKER_URL = 'redis://localhost'
-    CELERY_RESULT_BACKEND = 'redis://localhost'
-
-celery_app = Celery('quiz')
-celery_app.config_from_object('django.conf:settings', namespace='CELERY')
-celery_app.autodiscover_tasks()
-
-celery_app.conf.result_backend = CELERY_RESULT_BACKEND
