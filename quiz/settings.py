@@ -51,7 +51,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = ['http://quizzes.icyloops.com']
+    CORS_ALLOWED_ORIGINS = ['https://quizzes.icyloops.com']
 
 # Application definition
 
