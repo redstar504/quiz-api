@@ -42,7 +42,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-7ux(xzt0$n4ag
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.69', 'api.quizzes.icyloops.com', 'foo']
+ALLOWED_HOSTS = ['localhost', '192.168.1.69', 'api.quizzes.icyloops.com']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
