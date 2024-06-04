@@ -6,3 +6,4 @@ log/*.log
 *.pem
 certs/
 .env
+celery.log
