@@ -42,7 +42,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-7ux(xzt0$n4ag
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.69', 'api.quizzes.icyloops.com']
+ALLOWED_HOSTS = ['localhost', '192.168.1.69', 'api.quizzes.icyloops.com', 'quizzes-rnux.onrender.com']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -51,7 +51,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = ['https://quizzes.icyloops.com']
+    CORS_ALLOWED_ORIGINS = ['https://quizzes.icyloops.com', 'https://quizzes-react.onrender.com']
 
 # Application definition
 
@@ -69,8 +69,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
