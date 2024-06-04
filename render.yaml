@@ -1,6 +1,6 @@
 databases:
   - name: quizzes
-    plan: free
+    plan: starter
     databaseName: quizzes
     user: quizzes
 
