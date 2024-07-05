@@ -14,13 +14,35 @@ import os
 from pathlib import Path
 
 import dj_database_url
+import environ
 from celery import Celery
 
-import environ
+
+def get_default_shell_env(key, default_value):
+    value = os.environ.get(key, default_value)
+    if isinstance(value, str) and ',' in value:
+        return value.split(',')
+    elif value:
+        return value
+    else:
+        return default_value
+
 
 env = environ.Env(
+    DEBUG=(bool, get_default_shell_env('DEBUG', False)),
+    SECRET_KEY=(str, get_default_shell_env('SECRET_KEY', '123')),
+    ALLOWED_HOSTS=(list, get_default_shell_env('ALLOWED_HOSTS', ['192.168.1.69'])),
+    ALLOWED_ORIGINS=(list, get_default_shell_env('ALLOWED_ORIGINS', [
+        'https://192.168.1.69:15174',
+        'http://192.168.1.69:5174',
+    ])),
+    TRUSTED_ORIGINS=(list, get_default_shell_env('TRUSTED_ORIGINS', [
+        'https://192.168.1.69:15174',
+        'http://192.168.1.69:5174',
+    ])),
     OPENAI_API_KEY=(str, ''),
-    CELERY_BROKER_URL=(str, '')
+    CELERY_BROKER_URL=(str, 'redis://localhost'),
+    CELERY_RESULT_BACKEND=(str, 'redis://localhost')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +53,7 @@ OPENAI_API_KEY = env('OPENAI_API_KEY')
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 
 # Comment out if not using results
-CELERY_RESULT_BACKEND = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -40,18 +62,13 @@ CELERY_RESULT_BACKEND = env('CELERY_BROKER_URL')
 SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-7ux(xzt0$n4ag7di65_u$9a8b8@_kw8k!cdez0w03p=_ec=rq8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.69', 'api.quizzes.icyloops.com', 'quizzes-rnux.onrender.com']
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
-else:
-    CORS_ALLOWED_ORIGINS = ['https://quizzes.icyloops.com', 'https://quizzes-react.onrender.com']
+CORS_ALLOWED_ORIGINS = env('ALLOWED_ORIGINS')
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = env('TRUSTED_ORIGINS')
 
 # Application definition
 
@@ -105,8 +122,8 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgresql://quizzes:quizzes@localhost:5432/quizzes',
-        conn_max_age=600
+        default='postgresql://quiz:quiz@localhost:5432/quiz',
+        test_options={'NAME': 'quiz_test'}
     )
 }
 
