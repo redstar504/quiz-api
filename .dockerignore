@@ -1,0 +1,19 @@
+# Ignore Python cache
+__pycache__
+*.pyc
+
+# Ignore version control
+.gitignore
+.git
+
+# Ignore miscellaneous files
+*.log
+*.sqlite3
+
+# Ignore Docker files
+Dockerfile
+docker-compose.yml
+
+# Ignore ENV file -- it will be populated by CM
+.env
+.env.dist
